@@ -45,6 +45,41 @@ footer a {
 }
 
 
-.btn-default:hover{
+button:hover{
     background-color: rgb(0, 0, 0);
+}
+
+.input-default{
+    padding-left: 10px;
+    width: 250px;
+    height: 30px;
+    border-radius: 10px;
+    background-color: #222831;
+    border-color: #00fff5;
+    color: #00fff5;
+}
+
+.input-default::placeholder{
+    color: #00fff5;
+}
+
+.select-default{  
+    padding-left: 10px;
+    width: 250px;
+    height: 36px;
+    border-radius: 10px;
+    background-color: #222831;
+    border-color: #00fff5;
+    color: #00fff5;
+}
+
+.btn-form{
+    margin-top: 10px;
+    color: #00fff5;
+    background-color: #222831;
+    border-color: #00fff5;
+    border-radius: 20px;
+    cursor: pointer;
+    width: 230px;
+    height: 30px;
 }
