@@ -1,0 +1,22 @@
+{
+  "name": "sistema-de-recomendacao",
+  "version": "1.0.0",
+  "description": "Sistema de recomendação proposto na disciplina de lógima matemática",
+  "main": "main.js",
+  "scripts": {
+    "start": "/home/manoel/Documentos/electron/electron ."
+  },
+  "repository": "https://github.com/manoelrmf/sistema_de_recomendacao",
+  "keywords": [
+    "Electron",
+    "quick",
+    "start",
+    "tutorial",
+    "demo"
+  ],
+  "author": "Manoel Ribeiro",
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "^3.4.1"
+  }
+}
