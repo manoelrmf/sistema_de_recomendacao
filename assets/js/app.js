@@ -34,39 +34,43 @@ $(document).ready(function () {
   function loadPageQuests() {
     $('main').load("quests.html", "data", function (response, status, request) {
       this;
-
+        setItens("#placaMaeID", placasMaes)
     });
   }
 
   function setValueLocalStorage(key, value) {
     localStorage.setItem(key, value);
-
   }
 
+  function setItens(select, array){
+    $.each(array, function (index, value) { 
+      $(select).append("<option value="+ value.preco +">"+ value.nome +" - R$ "+value.preco+"</option>");
+    });
+  }
 
-  //requestt a api
-  /* function getData(ajaxurl) { 
-      return $.ajax({
-        url: ajaxurl,
-        type: 'GET',
-      });
-  };
-    
-    async function test() {
-      try {
-        const data = await getData('http://www.omdbapi.com/?t=The+Prestige&apikey=5eb9dd68')
-        setTitle(data.Title)
-      } catch(err) {
-        console.log(err);
-      }
-    }
-  
-    function setTitle(title){
-        $(".teste").text(title)
-    }
-    
-    test();
-  
-  */
+  var placasMaes = [
+   {
+     "nome":"ASRock H110M",
+     "preco":381
+   },
+   {
+    "nome":"Asus A320M",
+    "preco":386
+  },
+  {
+    "nome":"Gigabyte GA-H270M-Gaming 3",
+    "preco":469
+  },
+  {
+    "nome":"MSI B350 Tomahawk",
+    "preco":596
+  },
+  {
+    "nome":"MSI Z270 SLI Plus",
+    "preco":699
+  }
+  ]
+
+
 
 });
