@@ -3,7 +3,6 @@ $(document).ready(function () {
   JSON.stringfy(objeto): para armazenar os dados, utilizaremos o formato JSON e esta função transforma um objeto em string com sintaxe adequado ao JSON.
   JSON.parse(objeto): já a função parse transforma um item no formato JSON no seu formato original.
   */
-  loadPageQuests()
 
   $('#home').click(function (e) {
     loadPageForm()
@@ -34,6 +33,7 @@ $(document).ready(function () {
   function loadPageQuests() {
     $('main').load("quests.html", "data", function (response, status, request) {
       this;
+      var saldo = 0
       setItens("#placaMaeID", placasMaes)
       setItens("#processadorID", processadores)
       setItens("#memoriaRamID", memoriaRam)
@@ -41,8 +41,19 @@ $(document).ready(function () {
       setItens("#placaVideoID", placaVideo)
       setItens("#fonteID", fontes)
 
-     
-		
+     $('.select-component').change(function (e) { 
+       e.preventDefault();
+       saldo += parseInt($(this).val());
+       $('.saldo').text('R$ '+saldo);
+       $(this).attr("disabled", true);
+     });
+    
+     $('#limparForm').click(function (e) { 
+       $('.select-component').removeAttr('disabled');
+       saldo = parseInt(0);
+       $('.saldo').text('R$ '+saldo);
+
+     });
 
     });
   }

@@ -1,32 +1,35 @@
-<div>
+<form action="">
+    <div>
     <p class="saldo">R$ 0</p>
+    <button class="btn-form" type="reset" id="limparForm">Limpar</button>
 </div>
-<div class="components">
-    <div class="component-item">
-        <select name="placaMae" id="placaMaeID" class="select-default">
-            <option value="">Selecione Placa Mãe</option>
-        </select>
-        <select name="processador" id="processadorID" class="select-default">
-            <option value="">Selecione Processador</option>
-        </select>
+    <div class="components">
+        <div class="component-item">
+            <select name="placaMae" id="placaMaeID" class="select-default select-component">
+                <option value="">Selecione Placa Mãe</option>
+            </select>
+            <select name="processador" id="processadorID" class="select-default select-component">
+                <option value="">Selecione Processador</option>
+            </select>
+        </div>
+        <div class="component-item">
+            <select name="memoriaRam" id="memoriaRamID" class="select-default select-component">
+                <option value="">Selecione Memória RAM</option>
+            </select>
+            <select name="armazenamento" id="armazenamentoID" class="select-default select-component">
+                <option value="">Selecione HD/SSD</option>
+            </select>
+        </div>
+        <div class="component-item">
+            <select name="placaVideo" id="placaVideoID" class="select-default select-component">
+                <option value="">Selecione Placa de Vídeo</option>
+            </select>
+            <select name="fonte" id="fonteID" class="select-default select-component">
+                <option value="">Selecione Fonte de Alimentação</option>
+            </select>
+        </div>
     </div>
-    <div class="component-item">
-        <select name="memoriaRam" id="memoriaRamID" class="select-default">
-            <option value="">Selecione Memória RAM</option>
-        </select>
-        <select name="armazenamento" id="armazenamentoID" class="select-default">
-            <option value="">Selecione HD/SSD</option>
-        </select>
-    </div>
-    <div class="component-item">
-        <select name="placaVideo" id="placaVideoID" class="select-default">
-            <option value="">Selecione Placa de Vídeo</option>
-        </select>
-        <select name="fonte" id="fonteID" class="select-default">
-            <option value="">Selecione Fonte de Alimentação</option>
-        </select>
-    </div>
-</div>
 <section>
     <button class="btn-form" id="formButton">Seguinte</button>
 </section>
+</form>
