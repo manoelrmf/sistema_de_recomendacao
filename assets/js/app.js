@@ -3,45 +3,33 @@ $(document).ready(function () {
   JSON.stringfy(objeto): para armazenar os dados, utilizaremos o formato JSON e esta função transforma um objeto em string com sintaxe adequado ao JSON.
   JSON.parse(objeto): já a função parse transforma um item no formato JSON no seu formato original.
   */
-
-  loadPageQuests();
+  loadPageQuests()
 
   $('#home').click(function (e) {
-    loadPageForm("Por favor, informe seus dados", "usuario")
+    loadPageForm()
   });
 
 
-  function loadPageForm(title ,userType) {
+  function loadPageForm() {
     $('main').load("form.html", "data", function (response, status, request) {
       this;
-      loadFormUsuario(title)
-
       $('#formButton').click(function (e) {
         e.preventDefault();
         var name = $('#nomeID').val();
-        var sexo = $('#sexoID').val();
+        var valor = $('#valorID').val();
 
         var usuarioObj = {
           "nome": name,
-          "sexo": sexo,
-          "tipo": userType
+          "valor": valor
         };
 
-        setValueLocalStorage(userType, JSON.stringify(usuarioObj))
+        setValueLocalStorage("usuario", JSON.stringify(usuarioObj))
 
-        if(userType === "usuario")
-          loadPageForm("Por favor, informe os dados do seu parceiro", "parceiro")
-
-        if(userType === "parceiro")
-          loadPageQuests()
+        loadPageQuests()
       });
     });
   }
 
-
-  function loadFormUsuario(title) {
-    $('#formTitle').text(title);
-  }
 
   function loadPageQuests() {
     $('main').load("quests.html", "data", function (response, status, request) {
