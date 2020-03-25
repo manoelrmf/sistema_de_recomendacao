@@ -40,7 +40,7 @@ $(document).ready(function () {
 
 
       const recomendation = calculateRecomendations(usuario.valor)
-      setRecomendation(recomendation)
+      if (recomendation !== undefined) setRecomendation(recomendation)
 
      $('.select-component').change(function (e) { 
        e.preventDefault();
@@ -53,7 +53,7 @@ $(document).ready(function () {
        $('.select-component').removeAttr('disabled');
        saldo = parseInt(0);
        $('.saldo').text('R$ '+saldo);
-
+       clearMessage()
      });
 
      
@@ -69,6 +69,16 @@ $(document).ready(function () {
       $('#placaVideoID').val(recomendation.placaVideo);
       $('#fonteID').val(recomendation.fonte);
       $('.saldo').text("R$ " + recomendation.total);
+      addMessage("A recomendação proposta!")
+  }
+
+  function addMessage(msg){
+    $('.msg').text(msg);
+  }
+
+  function clearMessage(){
+    $('.msg').text(" ");
+
   }
 
   function setValueLocalStorage(key, value) {
