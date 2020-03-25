@@ -80,13 +80,17 @@ $(document).ready(function () {
   function calculateRecomendations(valor){
   
     const recomendacaoMaisCara = {
-      "placaMae": null,
-      "processador": null,
-      "memoriaRam": null,
-      "armazenamento": null,
-      "placaVideo": null,
-      "fonte": null
+      "placaMae": max(placasMaes),
+      "processador": max(processadores),
+      "memoriaRam": max(memoriaRam),
+      "armazenamento": max(storage),
+      "placaVideo": max(placaVideo),
+      "fonte": max(fontes),
+      "total": 0
     }
+
+    recomendacaoMaisCara.total = caclTotal(recomendacaoMaisCara)
+    console.log(recomendacaoMaisCara.total)
 
     let recomendacaoMaisBarata = {
       "placaMae": min(placasMaes),
@@ -97,13 +101,18 @@ $(document).ready(function () {
       "fonte": min(fontes),
       "total": 0
     }
-    var total = 0
-    Object.values(recomendacaoMaisBarata).forEach(element => {
-      total += element
-    });
-    recomendacaoMaisBarata.total = total
+    
+    recomendacaoMaisBarata.total = caclTotal(recomendacaoMaisBarata)
     console.log(recomendacaoMaisBarata.total)
 
+  }
+
+  function caclTotal(array){
+    var total = 0
+    Object.values(array).forEach(element => {
+      total += element
+    });
+    return total
   }
 
   function min(array){
