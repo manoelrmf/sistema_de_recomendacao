@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+  loadPageQuests()
+
   $('#home').click(function (e) {
     loadPageForm()
   });
@@ -56,7 +58,10 @@ $(document).ready(function () {
        clearMessage()
      });
 
-     
+    $('#voltarID').click(function (e) { 
+      e.preventDefault();
+      loadPageForm()
+    });
 
     });
   }
@@ -69,7 +74,8 @@ $(document).ready(function () {
       $('#placaVideoID').val(recomendation.placaVideo);
       $('#fonteID').val(recomendation.fonte);
       $('.saldo').text("R$ " + recomendation.total);
-      addMessage("A recomendação proposta!")
+      $('.select-component').attr("disabled", true);
+      addMessage("A recomendação de peças proposta!")
   }
 
   function addMessage(msg){
@@ -78,7 +84,6 @@ $(document).ready(function () {
 
   function clearMessage(){
     $('.msg').text(" ");
-
   }
 
   function setValueLocalStorage(key, value) {
