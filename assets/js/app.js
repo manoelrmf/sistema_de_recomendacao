@@ -4,10 +4,11 @@ $(document).ready(function () {
   JSON.parse(objeto): já a função parse transforma um item no formato JSON no seu formato original.
   */
 
+  loadPageQuests()
+
   $('#home').click(function (e) {
     loadPageForm()
   });
-
 
   function loadPageForm() {
     $('main').load("form.html", "data", function (response, status, request) {
@@ -22,18 +23,22 @@ $(document).ready(function () {
           "valor": valor
         };
 
-        setValueLocalStorage("usuario", JSON.stringify(usuarioObj))
+        setValueLocalStorage("usuario", usuarioObj)
 
         loadPageQuests()
       });
     });
   }
 
-
   function loadPageQuests() {
     $('main').load("quests.html", "data", function (response, status, request) {
       this;
       var saldo = 0
+
+      var usuario = getValueLocalStrage("usuario")
+
+      calculateRecomendations(usuario)
+      
       setItens("#placaMaeID", placasMaes)
       setItens("#processadorID", processadores)
       setItens("#memoriaRamID", memoriaRam)
@@ -43,7 +48,7 @@ $(document).ready(function () {
 
      $('.select-component').change(function (e) { 
        e.preventDefault();
-       saldo += parseInt($(this).val());
+       saldo += parseInt($(this).val()) ;
        $('.saldo').text('R$ '+saldo);
        $(this).attr("disabled", true);
      });
@@ -59,13 +64,66 @@ $(document).ready(function () {
   }
 
   function setValueLocalStorage(key, value) {
-    localStorage.setItem(key, value);
+    localStorage.setItem(key, JSON.stringify(value));
+  }
+
+  function getValueLocalStrage(key) {
+    return JSON.parse(localStorage.getItem(key))
   }
 
   function setItens(select, array) {
     $.each(array, function (index, value) {
       $(select).append("<option value=" + value.preco + ">" + value.nome + " - R$ " + value.preco + "</option>");
     });
+  }
+
+  function calculateRecomendations(valor){
+  
+    const recomendacaoMaisCara = {
+      "placaMae": null,
+      "processador": null,
+      "memoriaRam": null,
+      "armazenamento": null,
+      "placaVideo": null,
+      "fonte": null
+    }
+
+    let recomendacaoMaisBarata = {
+      "placaMae": min(placasMaes),
+      "processador": min(processadores),
+      "memoriaRam": min(memoriaRam),
+      "armazenamento": min(storage),
+      "placaVideo": min(placaVideo),
+      "fonte": min(fontes),
+      "total": 0
+    }
+    var total = 0
+    Object.values(recomendacaoMaisBarata).forEach(element => {
+      total += element
+    });
+    recomendacaoMaisBarata.total = total
+    console.log(recomendacaoMaisBarata.total)
+
+  }
+
+  function min(array){
+    var menor = 0
+    for (let index = 0; index < array.length; index++) {
+      if (index == 0) menor = array[0].preco
+      if(array[index].preco < menor)
+        menor = array[index].preco
+    }
+    return menor
+  }
+
+  function max(array){
+    var maior = 0
+    for (let index = 0; index < array.length; index++) {
+      if (index == 0) maior = array[0].preco
+      if(array[index].preco > maior)
+        maior = array[index].preco
+    }
+    return maior
   }
 
   var placasMaes = [
@@ -209,5 +267,7 @@ $(document).ready(function () {
       "preco": 899
     }
   ]
+
+  
 
 });
