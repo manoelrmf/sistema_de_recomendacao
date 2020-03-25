@@ -11,7 +11,7 @@ function createWindow () {
   })
 
   mainWindow.loadFile('index.html')
- // mainWindow.removeMenu()
+  mainWindow.removeMenu()
 }
 
 app.whenReady().then(createWindow)

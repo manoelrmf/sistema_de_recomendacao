@@ -1,7 +1,5 @@
 $(document).ready(function () {
-
-  loadPageQuests()
-
+  
   $('#home').click(function (e) {
     loadPageForm()
   });
