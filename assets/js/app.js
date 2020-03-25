@@ -9,6 +9,13 @@ $(document).ready(function () {
   function loadPageForm() {
     $('main').load("form.html", "data", function (response, status, request) {
       this;
+
+      const usuario = getValueLocalStrage('usuario')
+      if(usuario !== undefined){
+        $('#nomeID').val(usuario.nome);
+        $('#valorID').val(usuario.valor);
+      }
+
       $('#formButton').click(function (e) {
         e.preventDefault();
         var name = $('#nomeID').val();
