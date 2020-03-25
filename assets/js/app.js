@@ -1,10 +1,4 @@
 $(document).ready(function () {
-  /*
-  JSON.stringfy(objeto): para armazenar os dados, utilizaremos o formato JSON e esta função transforma um objeto em string com sintaxe adequado ao JSON.
-  JSON.parse(objeto): já a função parse transforma um item no formato JSON no seu formato original.
-  */
-
-  loadPageQuests()
 
   $('#home').click(function (e) {
     loadPageForm()
@@ -37,14 +31,16 @@ $(document).ready(function () {
 
       var usuario = getValueLocalStrage("usuario")
 
-      calculateRecomendations(usuario)
-      
       setItens("#placaMaeID", placasMaes)
       setItens("#processadorID", processadores)
       setItens("#memoriaRamID", memoriaRam)
       setItens("#armazenamentoID", storage)
       setItens("#placaVideoID", placaVideo)
       setItens("#fonteID", fontes)
+
+
+      const recomendation = calculateRecomendations(usuario.valor)
+      setRecomendation(recomendation)
 
      $('.select-component').change(function (e) { 
        e.preventDefault();
@@ -60,7 +56,19 @@ $(document).ready(function () {
 
      });
 
+     
+
     });
+  }
+
+  function setRecomendation(recomendation){
+      $('#placaMaeID').val(recomendation.placaMae);
+      $('#processadorID').val(recomendation.processador);
+      $('#memoriaRamID').val(recomendation.memoriaRam);
+      $('#armazenamentoID').val(recomendation.armazenamento);
+      $('#placaVideoID').val(recomendation.placaVideo);
+      $('#fonteID').val(recomendation.fonte);
+      $('.saldo').text("R$ " + recomendation.total);
   }
 
   function setValueLocalStorage(key, value) {
@@ -79,7 +87,7 @@ $(document).ready(function () {
 
   function calculateRecomendations(valor){
   
-    const recomendacaoMaisCara = {
+    let recomendacaoMaisCara = {
       "placaMae": max(placasMaes),
       "processador": max(processadores),
       "memoriaRam": max(memoriaRam),
@@ -90,7 +98,6 @@ $(document).ready(function () {
     }
 
     recomendacaoMaisCara.total = caclTotal(recomendacaoMaisCara)
-    console.log(recomendacaoMaisCara.total)
 
     let recomendacaoMaisBarata = {
       "placaMae": min(placasMaes),
@@ -103,8 +110,13 @@ $(document).ready(function () {
     }
     
     recomendacaoMaisBarata.total = caclTotal(recomendacaoMaisBarata)
-    console.log(recomendacaoMaisBarata.total)
 
+    if(valor >= recomendacaoMaisCara.total){
+      return recomendacaoMaisCara
+    }
+
+    if(valor >= recomendacaoMaisBarata.total && valor < recomendacaoMaisCara.total)
+      return recomendacaoMaisBarata
   }
 
   function caclTotal(array){
