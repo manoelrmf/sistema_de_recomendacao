@@ -11,7 +11,7 @@ $(document).ready(function () {
       this;
 
       const usuario = getValueLocalStrage('usuario')
-      if(usuario !== undefined){
+      if(usuario !== null){
         $('#nomeID').val(usuario.nome);
         $('#valorID').val(usuario.valor);
       }
