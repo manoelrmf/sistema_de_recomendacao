@@ -17,6 +17,7 @@
   "author": "Manoel Ribeiro",
   "license": "MIT",
   "dependencies": {
+    "electron": "^8.2.0",
     "jquery": "^3.4.1"
   }
 }
