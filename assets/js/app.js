@@ -1,6 +1,8 @@
 $(document).ready(function () {
   
   $('#home').click(function (e) {
+    e.preventDefault();
+
     loadPageForm()
   });
 
