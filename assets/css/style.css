@@ -94,6 +94,16 @@ button:hover{
     padding: 10px;
 }
 
+.error{ 
+    background-color: #222831;
+    border-color: red;
+    color: red;
+}
+
+.error::placeholder{
+    color: red;
+}
+
 input:focus, select:focus, button:focus {
     outline: 0;
 }

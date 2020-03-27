@@ -21,14 +21,20 @@ $(document).ready(function () {
         var name = $('#nomeID').val();
         var valor = $('#valorID').val();
 
-        var usuarioObj = {
-          "nome": name,
-          "valor": valor
-        };
+        if (name == "" || valor == "") {
+          $('#nomeID').addClass('error');
+          $('#valorID').addClass('error');
+          $('#formTitle').css('color','red');
+        } else {
+          var usuarioObj = {
+            "nome": name,
+            "valor": valor
+          };
 
-        setValueLocalStorage("usuario", usuarioObj)
+          setValueLocalStorage("usuario", usuarioObj)
 
-        loadPageQuests()
+          loadPageQuests()
+        }
       });
     });
   }
@@ -105,7 +111,7 @@ $(document).ready(function () {
     });
   }
 
-  
+
 
   function calculaRecomendacoes(valor) {
     atualizaMetadados()
