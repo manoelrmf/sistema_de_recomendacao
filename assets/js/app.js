@@ -21,7 +21,7 @@ $(document).ready(function () {
         var name = $('#nomeID').val();
         var valor = $('#valorID').val();
 
-        var usuarioObj = {
+        var usuarioObj = {  
           "nome": name,
           "valor": valor
         };
@@ -46,7 +46,6 @@ $(document).ready(function () {
       setItens("#armazenamentoID", storage)
       setItens("#placaVideoID", placaVideo)
       setItens("#fonteID", fontes)
-
 
       calculateRecomendations(usuario.valor)
 
@@ -106,45 +105,44 @@ $(document).ready(function () {
     });
   }
 
-
   function setRecomendacao(id, total){
-    recomendacoesDeHardware[id].id = id
-    recomendacoesDeHardware[id].total = total
+    metadados[id].id = id
+    metadados[id].total = total
   }
 
   function calculateRecomendations(valor){
     atualizaRecomendacoes()
-    const recomendacaoFinal = verificaMelhorRecomendacao(recomendacoesDeHardware ,valor)
-    var i = recomendacaoFinal.id
-    let recomendacaoTeste = {
-      "placaMae": placasMaes[i].preco,
-      "processador": processadores[i].preco,
-      "memoriaRam": memoriaRam[i].preco,
-      "armazenamento": storage[i].preco,
-      "placaVideo": placaVideo[i].preco,
-      "fonte": fontes[i].preco,
-      "total": 0
+    const recomendacaoFinal = verificaMelhorRecomendacao(metadados ,valor)
+    if(recomendacaoFinal !== undefined){
+      var i = recomendacaoFinal.id
+      let recomendacaoTeste = {
+        "placaMae": placasMaes[i].preco,
+        "processador": processadores[i].preco,
+        "memoriaRam": memoriaRam[i].preco,
+        "armazenamento": storage[i].preco,
+        "placaVideo": placaVideo[i].preco,
+        "fonte": fontes[i].preco,
+        "total": 0
+      }
+  
+      recomendacaoTeste.total = caclTotal(recomendacaoTeste)
+      setaRecomendacaoSelect(recomendacaoTeste)
     }
-
-    recomendacaoTeste.total = caclTotal(recomendacaoTeste)
-
-    setaRecomendacaoSelect(recomendacaoTeste)
   }
 
   function verificaMelhorRecomendacao(array ,valor){
     for (let index = 0; index < array.length; index++) {
         const element = array[index];
-       
+        if(array[index+1].total === null) return element
         if(element.total != null && valor >= element.total && valor < array[index+1].total){
           return element
         }
     }
-    
   }
 
   function atualizaRecomendacoes(){
     let i
-    for(i = 0; i < 5; i++){
+    for(i = 0; i < metadados.length - 1; i++){
       let recomendacao = {
         "placaMae": placasMaes[i].preco,
         "processador": processadores[i].preco,
@@ -158,7 +156,7 @@ $(document).ready(function () {
       recomendacao.total = caclTotal(recomendacao)
       setRecomendacao(i, recomendacao.total)
     } 
-
+    console.log(metadados)
   }
 
   function caclTotal(array){
@@ -169,17 +167,7 @@ $(document).ready(function () {
     return total
   }
 
-  function max(array){
-    var maior = 0
-    for (let index = 0; index < array.length; index++) {
-      if (index == 0) maior = array[0].preco
-      if(array[index].preco > maior)
-        maior = array[index].preco
-    }
-    return maior
-  }
-
-  var recomendacoesDeHardware = [
+  var metadados = [
     {
       "id": 0,
       "total": null
@@ -204,6 +192,7 @@ $(document).ready(function () {
       "id": 5,
       "total": null
     }
+   
   ]
 
   var placasMaes = [
@@ -333,10 +322,6 @@ $(document).ready(function () {
     {
       "nome": "Fonte Corsair CX550 550W ",
       "preco": 342
-    },
-    {
-      "nome": "AMD Radeon RX 550",
-      "preco": 399
     },
     {
       "nome": "Fonte Corsair CX750 750W",
