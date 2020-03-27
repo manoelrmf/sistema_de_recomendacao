@@ -47,7 +47,7 @@ $(document).ready(function () {
       setItens("#placaVideoID", placaVideo)
       setItens("#fonteID", fontes)
 
-      calculateRecomendations(usuario.valor)
+      calculaRecomendacoes(usuario.valor)
 
       $('.select-component').change(function (e) {
         e.preventDefault();
@@ -105,13 +105,10 @@ $(document).ready(function () {
     });
   }
 
-  function setMetadados(id, total) {
-    metadados[id].id = id
-    metadados[id].total = total
-  }
+  
 
-  function calculateRecomendations(valor) {
-    atualizaRecomendacoes()
+  function calculaRecomendacoes(valor) {
+    atualizaMetadados()
     const metadadosRecomendacao = verificaMelhorRecomendacao(metadados, valor)
     if (metadadosRecomendacao !== undefined) {
       setaRecomendacaoSelect(compoeRecomendacao(metadadosRecomendacao.id))
@@ -143,7 +140,7 @@ $(document).ready(function () {
     }
   }
 
-  function atualizaRecomendacoes() {
+  function atualizaMetadados() {
     let i
     for (i = 0; i < metadados.length - 1; i++) {
       let recomendacao = {
@@ -159,6 +156,11 @@ $(document).ready(function () {
       recomendacao.total = caclTotal(recomendacao)
       setMetadados(i, recomendacao.total)
     }
+  }
+
+  function setMetadados(id, total) {
+    metadados[id].id = id
+    metadados[id].total = total
   }
 
   function caclTotal(array) {
