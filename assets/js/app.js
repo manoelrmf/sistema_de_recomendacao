@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  
+
   $('#home').click(function (e) {
     e.preventDefault();
     localStorage.clear()
@@ -11,7 +11,7 @@ $(document).ready(function () {
       this;
 
       const usuario = getValueLocalStrage('usuario')
-      if(usuario !== null){
+      if (usuario !== null) {
         $('#nomeID').val(usuario.nome);
         $('#valorID').val(usuario.valor);
       }
@@ -21,7 +21,7 @@ $(document).ready(function () {
         var name = $('#nomeID').val();
         var valor = $('#valorID').val();
 
-        var usuarioObj = {  
+        var usuarioObj = {
           "nome": name,
           "valor": valor
         };
@@ -43,51 +43,51 @@ $(document).ready(function () {
       setItens("#placaMaeID", placasMaes)
       setItens("#processadorID", processadores)
       setItens("#memoriaRamID", memoriaRam)
-      setItens("#armazenamentoID", storage)
+      setItens("#armazenamentoID", armazenamento)
       setItens("#placaVideoID", placaVideo)
       setItens("#fonteID", fontes)
 
       calculateRecomendations(usuario.valor)
 
-     $('.select-component').change(function (e) { 
-       e.preventDefault();
-       saldo += parseInt($(this).val()) ;
-       $('.saldo').text('R$ '+saldo);
-       $(this).attr("disabled", true);
-     });
-    
-     $('#limparForm').click(function (e) { 
-       $('.select-component').removeAttr('disabled');
-       saldo = parseInt(0);
-       $('.saldo').text('R$ '+saldo);
-       clearMessage()
-     });
+      $('.select-component').change(function (e) {
+        e.preventDefault();
+        saldo += parseInt($(this).val());
+        $('.saldo').text('R$ ' + saldo);
+        $(this).attr("disabled", true);
+      });
 
-    $('#voltarID').click(function (e) { 
-      e.preventDefault();
-      loadPageForm()
-    });
+      $('#limparForm').click(function (e) {
+        $('.select-component').removeAttr('disabled');
+        saldo = parseInt(0);
+        $('.saldo').text('R$ ' + saldo);
+        clearMessage()
+      });
+
+      $('#voltarID').click(function (e) {
+        e.preventDefault();
+        loadPageForm()
+      });
 
     });
   }
 
-  function setaRecomendacaoSelect(recomendation){
-      $('#placaMaeID').val(recomendation.placaMae);
-      $('#processadorID').val(recomendation.processador);
-      $('#memoriaRamID').val(recomendation.memoriaRam);
-      $('#armazenamentoID').val(recomendation.armazenamento);
-      $('#placaVideoID').val(recomendation.placaVideo);
-      $('#fonteID').val(recomendation.fonte);
-      $('.saldo').text("R$ " + recomendation.total);
-      $('.select-component').attr("disabled", true);
-      addMessage("A recomendação de peças proposta!")
+  function setaRecomendacaoSelect(recomendation) {
+    $('#placaMaeID').val(recomendation.placaMae);
+    $('#processadorID').val(recomendation.processador);
+    $('#memoriaRamID').val(recomendation.memoriaRam);
+    $('#armazenamentoID').val(recomendation.armazenamento);
+    $('#placaVideoID').val(recomendation.placaVideo);
+    $('#fonteID').val(recomendation.fonte);
+    $('.saldo').text("R$ " + recomendation.total);
+    $('.select-component').attr("disabled", true);
+    addMessage("A recomendação de peças proposta!")
   }
 
-  function addMessage(msg){
+  function addMessage(msg) {
     $('.msg').text(msg);
   }
 
-  function clearMessage(){
+  function clearMessage() {
     $('.msg').text(" ");
   }
 
@@ -105,61 +105,63 @@ $(document).ready(function () {
     });
   }
 
-  function setRecomendacao(id, total){
+  function setMetadados(id, total) {
     metadados[id].id = id
     metadados[id].total = total
   }
 
-  function calculateRecomendations(valor){
+  function calculateRecomendations(valor) {
     atualizaRecomendacoes()
-    const recomendacaoFinal = verificaMelhorRecomendacao(metadados ,valor)
-    if(recomendacaoFinal !== undefined){
-      var i = recomendacaoFinal.id
-      let recomendacaoTeste = {
-        "placaMae": placasMaes[i].preco,
-        "processador": processadores[i].preco,
-        "memoriaRam": memoriaRam[i].preco,
-        "armazenamento": storage[i].preco,
-        "placaVideo": placaVideo[i].preco,
-        "fonte": fontes[i].preco,
-        "total": 0
-      }
-  
-      recomendacaoTeste.total = caclTotal(recomendacaoTeste)
-      setaRecomendacaoSelect(recomendacaoTeste)
+    const metadadosRecomendacao = verificaMelhorRecomendacao(metadados, valor)
+    if (metadadosRecomendacao !== undefined) {
+      setaRecomendacaoSelect(compoeRecomendacao(metadadosRecomendacao.id))
     }
   }
 
-  function verificaMelhorRecomendacao(array ,valor){
+  function compoeRecomendacao(id) {
+    var i = id
+    let recomendacaoFinal = {
+      "placaMae": placasMaes[i].preco,
+      "processador": processadores[i].preco,
+      "memoriaRam": memoriaRam[i].preco,
+      "armazenamento": armazenamento[i].preco,
+      "placaVideo": placaVideo[i].preco,
+      "fonte": fontes[i].preco,
+      "total": 0
+    }
+
+    recomendacaoFinal.total = caclTotal(recomendacaoFinal)
+    return recomendacaoFinal
+  }
+
+  function verificaMelhorRecomendacao(array, valor) {
     for (let index = 0; index < array.length; index++) {
-        const element = array[index];
-        if(array[index+1].total === null) return element
-        if(element.total != null && valor >= element.total && valor < array[index+1].total){
-          return element
-        }
+      const element = array[index];
+      if (array[index + 1].total === null || element.total != null && valor >= element.total && valor < array[index + 1].total) {
+        return element
+      }
     }
   }
 
-  function atualizaRecomendacoes(){
+  function atualizaRecomendacoes() {
     let i
-    for(i = 0; i < metadados.length - 1; i++){
+    for (i = 0; i < metadados.length - 1; i++) {
       let recomendacao = {
         "placaMae": placasMaes[i].preco,
         "processador": processadores[i].preco,
         "memoriaRam": memoriaRam[i].preco,
-        "armazenamento": storage[i].preco,
+        "armazenamento": armazenamento[i].preco,
         "placaVideo": placaVideo[i].preco,
         "fonte": fontes[i].preco,
         "total": 0
       }
 
       recomendacao.total = caclTotal(recomendacao)
-      setRecomendacao(i, recomendacao.total)
-    } 
-    console.log(metadados)
+      setMetadados(i, recomendacao.total)
+    }
   }
 
-  function caclTotal(array){
+  function caclTotal(array) {
     var total = 0
     Object.values(array).forEach(element => {
       total += element
@@ -192,7 +194,7 @@ $(document).ready(function () {
       "id": 5,
       "total": null
     }
-   
+
   ]
 
   var placasMaes = [
@@ -264,7 +266,7 @@ $(document).ready(function () {
     }
   ]
 
-  var storage = [
+  var armazenamento = [
     {
       "nome": "Hd 500gb Pc Western",
       "preco": 99
@@ -307,7 +309,7 @@ $(document).ready(function () {
     {
       "nome": "N/ GeForce RTX 2080 ti",
       "preco": 8549
-    } 
+    }
   ]
 
   var fontes = [
