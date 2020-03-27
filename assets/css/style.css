@@ -94,3 +94,6 @@ button:hover{
     padding: 10px;
 }
 
+input:focus, select:focus, button:focus {
+    outline: 0;
+}
