@@ -48,8 +48,7 @@ $(document).ready(function () {
       setItens("#fonteID", fontes)
 
 
-      const recomendation = calculateRecomendations(usuario.valor)
-      if (recomendation !== undefined) setRecomendation(recomendation)
+      calculateRecomendations(usuario.valor)
 
      $('.select-component').change(function (e) { 
        e.preventDefault();
@@ -73,7 +72,7 @@ $(document).ready(function () {
     });
   }
 
-  function setRecomendation(recomendation){
+  function setaRecomendacaoSelect(recomendation){
       $('#placaMaeID').val(recomendation.placaMae);
       $('#processadorID').val(recomendation.processador);
       $('#memoriaRamID').val(recomendation.memoriaRam);
@@ -107,38 +106,59 @@ $(document).ready(function () {
     });
   }
 
+
+  function setRecomendacao(id, total){
+    recomendacoesDeHardware[id].id = id
+    recomendacoesDeHardware[id].total = total
+  }
+
   function calculateRecomendations(valor){
-  
-    let recomendacaoMaisCara = {
-      "placaMae": max(placasMaes),
-      "processador": max(processadores),
-      "memoriaRam": max(memoriaRam),
-      "armazenamento": max(storage),
-      "placaVideo": max(placaVideo),
-      "fonte": max(fontes),
+    atualizaRecomendacoes()
+    const recomendacaoFinal = verificaMelhorRecomendacao(recomendacoesDeHardware ,valor)
+    var i = recomendacaoFinal.id
+    let recomendacaoTeste = {
+      "placaMae": placasMaes[i].preco,
+      "processador": processadores[i].preco,
+      "memoriaRam": memoriaRam[i].preco,
+      "armazenamento": storage[i].preco,
+      "placaVideo": placaVideo[i].preco,
+      "fonte": fontes[i].preco,
       "total": 0
     }
 
-    recomendacaoMaisCara.total = caclTotal(recomendacaoMaisCara)
+    recomendacaoTeste.total = caclTotal(recomendacaoTeste)
 
-    let recomendacaoMaisBarata = {
-      "placaMae": min(placasMaes),
-      "processador": min(processadores),
-      "memoriaRam": min(memoriaRam),
-      "armazenamento": min(storage),
-      "placaVideo": min(placaVideo),
-      "fonte": min(fontes),
-      "total": 0
+    setaRecomendacaoSelect(recomendacaoTeste)
+  }
+
+  function verificaMelhorRecomendacao(array ,valor){
+    for (let index = 0; index < array.length; index++) {
+        const element = array[index];
+       
+        if(element.total != null && valor >= element.total && valor < array[index+1].total){
+          return element
+        }
     }
     
-    recomendacaoMaisBarata.total = caclTotal(recomendacaoMaisBarata)
+  }
 
-    if(valor >= recomendacaoMaisCara.total){
-      return recomendacaoMaisCara
-    }
+  function atualizaRecomendacoes(){
+    let i
+    for(i = 0; i < 5; i++){
+      let recomendacao = {
+        "placaMae": placasMaes[i].preco,
+        "processador": processadores[i].preco,
+        "memoriaRam": memoriaRam[i].preco,
+        "armazenamento": storage[i].preco,
+        "placaVideo": placaVideo[i].preco,
+        "fonte": fontes[i].preco,
+        "total": 0
+      }
 
-    if(valor >= recomendacaoMaisBarata.total && valor < recomendacaoMaisCara.total)
-      return recomendacaoMaisBarata
+      recomendacao.total = caclTotal(recomendacao)
+      setRecomendacao(i, recomendacao.total)
+    } 
+
   }
 
   function caclTotal(array){
@@ -147,16 +167,6 @@ $(document).ready(function () {
       total += element
     });
     return total
-  }
-
-  function min(array){
-    var menor = 0
-    for (let index = 0; index < array.length; index++) {
-      if (index == 0) menor = array[0].preco
-      if(array[index].preco < menor)
-        menor = array[index].preco
-    }
-    return menor
   }
 
   function max(array){
@@ -168,6 +178,33 @@ $(document).ready(function () {
     }
     return maior
   }
+
+  var recomendacoesDeHardware = [
+    {
+      "id": 0,
+      "total": null
+    },
+    {
+      "id": 1,
+      "total": null
+    },
+    {
+      "id": 2,
+      "total": null
+    },
+    {
+      "id": 3,
+      "total": null
+    },
+    {
+      "id": 4,
+      "total": null
+    },
+    {
+      "id": 5,
+      "total": null
+    }
+  ]
 
   var placasMaes = [
     {
