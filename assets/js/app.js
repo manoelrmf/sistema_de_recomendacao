@@ -2,7 +2,7 @@ $(document).ready(function () {
   
   $('#home').click(function (e) {
     e.preventDefault();
-
+    localStorage.clear()
     loadPageForm()
   });
 
@@ -194,24 +194,24 @@ $(document).ready(function () {
 
   var processadores = [
     {
-      "nome": "Intel Core i5 9600K",
-      "preco": 1209
-    },
-    {
-      "nome": "AMD Ryzen 7 2700X",
-      "preco": 999
-    },
-    {
-      "nome": "AMD Ryzen 3 2200G",
-      "preco": 479
+      "nome": "AMD Athlon 200GE",
+      "preco": 285
     },
     {
       "nome": "Pentium Gold G5400",
       "preco": 339
     },
     {
-      "nome": "AMD Athlon 200GE",
-      "preco": 285
+      "nome": "AMD Ryzen 3 2200G",
+      "preco": 479
+    },
+    {
+      "nome": "AMD Ryzen 7 2700X",
+      "preco": 999
+    },
+    {
+      "nome": "Intel Core i5 9600K",
+      "preco": 1209
     }
   ]
 
@@ -240,8 +240,16 @@ $(document).ready(function () {
 
   var storage = [
     {
+      "nome": "Hd 500gb Pc Western",
+      "preco": 99
+    },
+    {
       "nome": "SSD de 240GB G26 PLUS",
       "preco": 168
+    },
+    {
+      "nome": "Hd 1tb Seagate",
+      "preco": 269
     },
     {
       "nome": "SSD de 500GB 860 EVO",
@@ -250,25 +258,13 @@ $(document).ready(function () {
     {
       "nome": "SSD 1TB WD Black",
       "preco": 1699
-    },
-    {
-      "nome": "Hd 500gb Pc Western",
-      "preco": 99
-    },
-    {
-      "nome": "Hd 1tb Seagate",
-      "preco": 269
     }
   ]
 
   var placaVideo = [
     {
-      "nome": "N/ GeForce RTX 2080 ti",
-      "preco": 8549
-    },
-    {
-      "nome": "AMD Radeon RX 5700",
-      "preco": 2099
+      "nome": "AMD Radeon RX 550",
+      "preco": 399
     },
     {
       "nome": "AMD Radeon RX 570",
@@ -279,9 +275,13 @@ $(document).ready(function () {
       "preco": 729
     },
     {
-      "nome": "AMD Radeon RX 550",
-      "preco": 399
-    }
+      "nome": "AMD Radeon RX 5700",
+      "preco": 2099
+    },
+    {
+      "nome": "N/ GeForce RTX 2080 ti",
+      "preco": 8549
+    } 
   ]
 
   var fontes = [
@@ -310,7 +310,5 @@ $(document).ready(function () {
       "preco": 899
     }
   ]
-
-  
 
 });
